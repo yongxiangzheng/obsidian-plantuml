@@ -22,8 +22,8 @@ export class LocalProcessors implements Processor {
             await localforage.setItem('ts-' + encodedDiagram, Date.now());
             return;
         }
-
-        const image = await this.generateLocalImage(source, OutputType.ASCII, this.plugin.replacer.getPath(ctx));
+        const path = this.plugin.replacer.getFullPath("") + this.plugin.settings.c4PlantUMLPath;
+        const image = await this.generateLocalImage(source, OutputType.ASCII, path);
         insertAsciiImage(el, image);
         await localforage.setItem('ascii-' + encodedDiagram, image);
         await localforage.setItem('ts-' + encodedDiagram, Date.now());
@@ -39,7 +39,7 @@ export class LocalProcessors implements Processor {
             return;
         }
 
-        const path = this.plugin.replacer.getPath(ctx);
+        const path = this.plugin.replacer.getFullPath("") + this.plugin.settings.c4PlantUMLPath;
         const image = await this.generateLocalImage(source, OutputType.PNG, path);
         const map = await this.generateLocalMap(source, path);
 
@@ -58,7 +58,8 @@ export class LocalProcessors implements Processor {
             await localforage.setItem('ts-' + encodedDiagram, Date.now());
             return;
         }
-        const image = await this.generateLocalImage(source, OutputType.SVG, this.plugin.replacer.getPath(ctx));
+        const path = this.plugin.replacer.getFullPath("") + this.plugin.settings.c4PlantUMLPath;
+        const image = await this.generateLocalImage(source, OutputType.SVG, path);
         await localforage.setItem('svg-' + encodedDiagram, image);
         await localforage.setItem('ts-' + encodedDiagram, Date.now());
         insertSvgImage(el, image);

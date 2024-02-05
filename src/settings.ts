@@ -7,6 +7,7 @@ export interface PlantUMLSettings {
     debounce: number;
     localJar: string;
     javaPath: string;
+    c4PlantUMLPath: string;
     dotPath: string;
     defaultProcessor: string;
     cache: number;
@@ -18,6 +19,7 @@ export const DEFAULT_SETTINGS: PlantUMLSettings = {
     debounce: 3,
     localJar: '',
     javaPath: 'java',
+    c4PlantUMLPath: '.',
     dotPath: 'dot',
     defaultProcessor: "png",
     cache: 60,
@@ -81,6 +83,17 @@ export class PlantUMLSettingsTab extends PluginSettingTab {
                     )
                 );
 
+            new Setting(containerEl)
+                .setName("C4-PlantUML path")
+                .setDesc("Path to C4-PlantUML")
+                .addText(text => text.setPlaceholder(DEFAULT_SETTINGS.c4PlantUMLPath)
+                    .setValue(this.plugin.settings.c4PlantUMLPath)
+                    .onChange(async (value) => {
+                            this.plugin.settings.c4PlantUMLPath = value;
+                            await this.plugin.saveSettings();
+                        }
+                    )
+                );
             new Setting(containerEl)
                 .setName("Dot path")
                 .setDesc("Path to dot executable")
